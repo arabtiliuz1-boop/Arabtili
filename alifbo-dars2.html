@@ -55,7 +55,7 @@
     background: var(--parchment); border:1px solid var(--line); border-radius:12px;
     padding: 14px 16px; text-align:center; min-width: 110px; flex:1;
   }
-  .form-card .glyph{ font-family:'Amiri', serif; font-size: 32px; color: var(--teal-deep); direction:rtl; line-height:1; margin-bottom:6px; }
+  .form-card .glyph{ font-family:'Amiri', serif; font-size: 32px; color: var(--teal-deep); direction:rtl; line-height:1.4; margin-bottom:6px; }
   .form-card .label{ font-size:12.5px; color: var(--ink-soft); }
 
   .note-box{
@@ -68,6 +68,31 @@
     line-height: 1.65;
   }
   .note-box b{ color: var(--gold); }
+  .note-box p{ margin:0; }
+  .note-box-head{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .note-glyph{
+    font-family:'Amiri', serif; font-size:28px; color: var(--gold); direction:rtl;
+    line-height:1; flex-shrink:0;
+  }
+
+  .pronounce-box{
+    background: var(--teal-tint);
+    border: 1px solid rgba(111,163,108,0.35);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .pronounce-box p{ margin:0; }
+  .pronounce-box p + p{ margin-top:8px; }
+  .pronounce-box-head{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .pronounce-icon{
+    width:26px; height:26px; border-radius:50%; flex-shrink:0;
+    background: var(--teal-deep); color: var(--gold-light);
+    display:flex; align-items:center; justify-content:center; font-size:13px;
+  }
+  .pronounce-box b{ color: var(--teal-deep); }
 
   /* ---------- exercises (shared with lesson 1 patterns) ---------- */
   .exercise{
@@ -84,7 +109,7 @@
   }
   .ex-progress{ font-size:13px; color: var(--ink-soft); }
   .ex-instr{ font-size:14.5px; color: var(--ink-soft); margin:0 0 20px; }
-  .prompt-glyph{ font-family:'Amiri', serif; font-size:60px; color: var(--teal-deep); text-align:center; direction:rtl; margin:6px 0 22px; line-height:1; }
+  .prompt-glyph{ font-family:'Amiri', serif; font-size:60px; color: var(--teal-deep); text-align:center; direction:rtl; margin:10px 0 26px; line-height:1.4; }
 
   .opt-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(110px,1fr)); gap:12px; max-width:520px; margin:0 auto; }
   .opt-btn{
@@ -256,6 +281,13 @@
         <div class="form-card"><div class="glyph">ـب</div><div class="label">So'z oxirida</div></div>
       </div>
       <p>E'tibor bering: so'z boshida va o'rtasida Ba tekisroq, kichik "taroqcha" shaklida bo'ladi; mustaqil holatda va so'z oxirida esa ostida chuqurroq "qayiqcha" shakliga ega bo'ladi. Lekin nuqta — har doim bitta va har doim pastda.</p>
+      <div class="pronounce-box">
+        <div class="pronounce-box-head">
+          <span class="pronounce-icon" aria-hidden="true">👄</span>
+          <b>Qanday talaffuz qilinadi?</b>
+        </div>
+        <p>Ikkala labingizni bir zumga to'liq yuming — xuddi biror narsani ushlab turgandek. Keyin labingizni birdan ochib, ovoz bilan tovush chiqaring. Havo <b>og'iz</b> orqali chiqadi, burun ishtirok etmaydi. Bu tovush portlagandek keskin chiqadi.</p>
+      </div>
     </div>
 
     <div class="letter-panel">
@@ -274,7 +306,18 @@
         <div class="form-card"><div class="glyph">ـم</div><div class="label">So'z oxirida</div></div>
       </div>
       <div class="note-box">
-        <b>Muhim ogohlantirish:</b> Mimning so'z o'rtasidagi shakli (<span class="ar" style="font-size:20px;">ـمـ</span>) juda kichkina — bu shunchaki chiziq ustida turgan kichkina yumaloq halqacha, "dumi" yo'q. Ko'pchilik yangi boshlovchilar buni chiziqning bir qalinlashgan joyi deb o'ylab, harf borligini sezmay o'tib ketishadi! Shuning uchun so'z o'rtasini o'qiyotganda, chiziq ustida kichkina yumaloq "tugun" ko'rsangiz — to'xtang, bu Mim, uni albatta o'qishni unutmang.
+        <div class="note-box-head">
+          <span class="note-glyph">ـمـ</span>
+          <b>Muhim ogohlantirish</b>
+        </div>
+        <p>Mimning so'z o'rtasidagi shakli juda kichkina — bu shunchaki chiziq ustida turgan kichkina yumaloq halqacha, "dumi" yo'q. Ko'pchilik yangi boshlovchilar buni chiziqning bir qalinlashgan joyi deb o'ylab, harf borligini sezmay o'tib ketishadi! Shuning uchun so'z o'rtasini o'qiyotganda, chiziq ustida kichkina yumaloq "tugun" ko'rsangiz — to'xtang, bu Mim, uni albatta o'qishni unutmang.</p>
+      </div>
+      <div class="pronounce-box">
+        <div class="pronounce-box-head">
+          <span class="pronounce-icon" aria-hidden="true">👄</span>
+          <b>Qanday talaffuz qilinadi?</b>
+        </div>
+        <p>Qiziq fakt: Mim ham Ba bilan <b>aynan bir xil joydan</b> — ikkala lab bilan — chiqadi! Farqi shunda: Ba talaffuzida labni ochib, ovozni og'izdan chiqarasiz, Mim talaffuzida esa labni yumgan holda tovushni <b>burningiz orqali</b> cho'zib chiqarasiz. "Mmm" deb aytib ko'ring — burningiz jaranglayotganini his qilasiz. Bu — burun orqali chiqadigan tovush, arab tilida "g'unna" deb ataladi.</p>
       </div>
     </div>
 
@@ -294,6 +337,13 @@
         <div class="form-card"><div class="glyph">ـن</div><div class="label">So'z oxirida</div></div>
       </div>
       <p>Xuddi Ba kabi: mustaqil va oxirgi holatda chuqurroq "qayiqcha", boshida va o'rtada tekisroq shakl. Farqni eslab qolish oson: <b>Ba — nuqta pastda, Nun — nuqta ustida.</b></p>
+      <div class="pronounce-box">
+        <div class="pronounce-box-head">
+          <span class="pronounce-icon" aria-hidden="true">👄</span>
+          <b>Qanday talaffuz qilinadi?</b>
+        </div>
+        <p>Nun labdan emas, <b>til uchidan</b> chiqadi. Til uchingizni tepadagi old tishlaringiz orqasidagi milkka tekkizing, so'ng tovushni Mim kabi <b>burningiz orqali</b> chiqaring. "Nnn" deb aytib ko'ring — bu ham burun orqali jaranglaydi (g'unna), lekin bu safar labingiz emas, tilingiz ishlaydi.</p>
+      </div>
     </div>
   </div>
 
