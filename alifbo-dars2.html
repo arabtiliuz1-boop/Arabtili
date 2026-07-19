@@ -93,6 +93,13 @@
     display:flex; align-items:center; justify-content:center; font-size:13px;
   }
   .pronounce-box b{ color: var(--teal-deep); }
+  .play-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size: 13px; font-weight:600; color: var(--teal-deep);
+    background: rgba(255,255,255,0.55); border: none; border-radius: 999px;
+    padding: 7px 14px; cursor:pointer; margin-top: 10px;
+  }
+  .play-btn:hover{ background: rgba(255,255,255,0.85); }
 
   /* ---------- exercises (shared with lesson 1 patterns) ---------- */
   .exercise{
@@ -186,6 +193,20 @@
   .ghost-btn:hover{ border-color: var(--teal); color: var(--teal-deep); }
 
   /* timed reading */
+  .listen-repeat-label{
+    text-align:center; font-size:13px; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--teal-deep); font-weight:600; margin-bottom:14px;
+  }
+  .reading-words-audio{
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-bottom: 30px;
+    padding-bottom: 26px; border-bottom: 1px dashed var(--line);
+  }
+  .reading-word-audio{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-family:'Amiri', serif; font-size: 28px; direction:rtl; color: var(--ink);
+    background: var(--parchment); border:1px solid var(--line); border-radius:12px;
+    padding: 14px 18px;
+  }
   .timer-display{
     text-align:center; font-family:'Playfair Display', serif; font-size: 40px; font-weight:700;
     color: var(--teal-deep); margin: 4px 0 20px;
@@ -287,6 +308,7 @@
           <b>Qanday talaffuz qilinadi?</b>
         </div>
         <p>Ikkala labingizni bir zumga to'liq yuming — xuddi biror narsani ushlab turgandek. Keyin labingizni birdan ochib, ovoz bilan tovush chiqaring. Havo <b>og'iz</b> orqali chiqadi, burun ishtirok etmaydi. Bu tovush portlagandek keskin chiqadi.</p>
+        <button class="play-btn" onclick="speakArabic('بَ')">🔊 Tinglash</button>
       </div>
     </div>
 
@@ -318,6 +340,7 @@
           <b>Qanday talaffuz qilinadi?</b>
         </div>
         <p>Qiziq fakt: Mim ham Ba bilan <b>aynan bir xil joydan</b> — ikkala lab bilan — chiqadi! Farqi shunda: Ba talaffuzida labni ochib, ovozni og'izdan chiqarasiz, Mim talaffuzida esa labni yumgan holda tovushni <b>burningiz orqali</b> cho'zib chiqarasiz. "Mmm" deb aytib ko'ring — burningiz jaranglayotganini his qilasiz. Bu — burun orqali chiqadigan tovush, arab tilida "g'unna" deb ataladi.</p>
+        <button class="play-btn" onclick="speakArabic('مَ')">🔊 Tinglash</button>
       </div>
     </div>
 
@@ -343,6 +366,7 @@
           <b>Qanday talaffuz qilinadi?</b>
         </div>
         <p>Nun labdan emas, <b>til uchidan</b> chiqadi. Til uchingizni tepadagi old tishlaringiz orqasidagi milkka tekkizing, so'ng tovushni Mim kabi <b>burningiz orqali</b> chiqaring. "Nnn" deb aytib ko'ring — bu ham burun orqali jaranglaydi (g'unna), lekin bu safar labingiz emas, tilingiz ishlaydi.</p>
+        <button class="play-btn" onclick="speakArabic('نَ')">🔊 Tinglash</button>
       </div>
     </div>
   </div>
@@ -431,7 +455,11 @@
       <h3 class="ex-title"><span class="num">6</span> Tez o'qing</h3>
       <span class="ex-progress" id="ex6-progress"></span>
     </div>
-    <p class="ex-instr">"Boshlash" tugmasini bosing va pastdagi 5 ta so'zni ovoz chiqarib o'qing. 30 soniyada ulguring!</p>
+    <p class="ex-instr">Avval har bir so'zni tinglab, ovoz chiqarib qaytaring. Keyin "Boshlash" tugmasini bosib, so'zlarni 30 soniyada tez o'qib chiqing.</p>
+
+    <div class="listen-repeat-label">Eshiting va qaytaring</div>
+    <div class="reading-words-audio" id="reading-words-audio"></div>
+
     <div class="timer-display" id="timer-display">30</div>
     <div class="reading-words" id="reading-words"></div>
     <div class="timed-actions">
@@ -459,6 +487,21 @@
 </footer>
 
 <script>
+/* ============================================================
+   Audio (Web Speech API) — best-effort; browser voice quality varies.
+   ============================================================ */
+function speakArabic(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const voices = window.speechSynthesis.getVoices();
+  const arVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+  if(arVoice) u.voice = arVoice;
+  u.lang = 'ar-SA';
+  u.rate = 0.8;
+  window.speechSynthesis.speak(u);
+}
+
 /* ============================================================
    Data
    ============================================================ */
@@ -760,6 +803,22 @@ function renderReadingWords(){
     div.className = 'reading-word';
     div.textContent = w;
     el.appendChild(div);
+  });
+
+  const audioEl = document.getElementById('reading-words-audio');
+  audioEl.innerHTML = '';
+  READING_WORDS.forEach(w => {
+    const card = document.createElement('div');
+    card.className = 'reading-word-audio';
+    const wordSpan = document.createElement('span');
+    wordSpan.textContent = w;
+    const btn = document.createElement('button');
+    btn.className = 'play-btn';
+    btn.textContent = '🔊 Tinglash';
+    btn.onclick = () => speakArabic(w);
+    card.appendChild(wordSpan);
+    card.appendChild(btn);
+    audioEl.appendChild(card);
   });
 }
 function startTimedReading(){
