@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-dars: Ta, Ya, Ro — Arab tili</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .lesson-hero{ padding: 20px 0 32px; border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+  .lesson-kicker{ font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
+  .lesson-hero h1{ font-family:'Playfair Display', serif; font-weight:700; font-size: clamp(28px,4vw,38px); margin:0 0 10px; }
+  .lesson-hero p{ color: var(--ink-soft); font-size: 16px; max-width: 560px; margin:0; line-height:1.6; }
+
+  .block{
+    background: var(--parchment-card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    margin-bottom: 24px;
+  }
+  .block h2{
+    font-family:'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .block h2 .num{
+    width: 30px; height:30px; border-radius: 50%;
+    background: var(--teal-tint); color: var(--teal-deep);
+    font-size: 14px; font-family:'Lora', serif; font-weight:700;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .block p{ font-size: 15.5px; line-height:1.75; color: var(--ink); margin: 0 0 14px; }
+  .block p:last-child{ margin-bottom:0; }
+  .block .ar{ font-family:'Amiri', serif; }
+
+  .letter-panel{ border-top: 1px dashed var(--line); padding-top: 22px; margin-top: 22px; }
+  .letter-panel:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
+  .letter-panel-head{ display:flex; align-items:center; gap:14px; margin-bottom: 12px; }
+  .letter-panel-head .big-glyph{
+    font-family:'Amiri', serif; font-size: 40px; color: var(--teal-deep); direction:rtl;
+    width:56px; height:56px; border-radius:14px; background:var(--teal-tint);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .letter-panel-head h3{ font-family:'Playfair Display', serif; font-size:19px; margin:0; }
+  .letter-panel-head .sound-tag{ font-size:13px; color:var(--ink-soft); }
+
+  .forms-row{ display:flex; gap:12px; flex-wrap:wrap; margin: 14px 0; }
+  .form-card{
+    background: var(--parchment); border:1px solid var(--line); border-radius:12px;
+    padding: 14px 16px; text-align:center; min-width: 110px; flex:1;
+  }
+  .form-card .glyph{ font-family:'Amiri', serif; font-size: 32px; color: var(--teal-deep); direction:rtl; line-height:1.4; margin-bottom:6px; }
+  .form-card .label{ font-size:12.5px; color: var(--ink-soft); }
+
+  .note-box{
+    background: rgba(184,134,46,0.08);
+    border: 1px solid rgba(184,134,46,0.3);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .note-box b{ color: var(--gold); }
+  .note-box p{ margin:0; }
+  .note-box-head{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .note-glyph{
+    font-family:'Amiri', serif; font-size:28px; color: var(--gold); direction:rtl;
+    line-height:1; flex-shrink:0;
+  }
+
+  .pronounce-box{
+    background: var(--teal-tint);
+    border: 1px solid rgba(111,163,108,0.35);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .pronounce-box p{ margin:0; }
+  .pronounce-box p + p{ margin-top:8px; }
+  .pronounce-box-head{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .pronounce-icon{
+    width:26px; height:26px; border-radius:50%; flex-shrink:0;
+    background: var(--teal-deep); color: var(--gold-light);
+    display:flex; align-items:center; justify-content:center; font-size:13px;
+  }
+  .pronounce-box b{ color: var(--teal-deep); }
+  .play-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size: 13px; font-weight:600; color: var(--teal-deep);
+    background: rgba(255,255,255,0.55); border: none; border-radius: 999px;
+    padding: 7px 14px; cursor:pointer; margin-top: 10px;
+  }
+  .play-btn:hover{ background: rgba(255,255,255,0.85); }
+
+  /* ---------- exercises (shared with lesson 1 patterns) ---------- */
+  .exercise{
+    background: var(--parchment-card); border:1px solid var(--line); border-radius:20px;
+    box-shadow: var(--shadow); padding:30px; margin-bottom:24px;
+  }
+  .ex-head{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:6px; flex-wrap:wrap; }
+  .ex-title{ font-family:'Playfair Display', serif; font-weight:700; font-size:20px; margin:0; display:flex; align-items:center; gap:10px; }
+  .ex-title .num{
+    width:30px; height:30px; border-radius:50%;
+    background: linear-gradient(155deg, var(--teal), var(--teal-deep));
+    color: var(--gold-light); font-size:14px; font-family:'Lora',serif; font-weight:700;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .ex-progress{ font-size:13px; color: var(--ink-soft); }
+  .ex-instr{ font-size:14.5px; color: var(--ink-soft); margin:0 0 20px; }
+  .prompt-glyph{ font-family:'Amiri', serif; font-size:60px; color: var(--teal-deep); text-align:center; direction:rtl; margin:10px 0 26px; line-height:1.4; }
+
+  .opt-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(110px,1fr)); gap:12px; max-width:520px; margin:0 auto; }
+  .opt-btn{
+    font-family:'Lora', serif; font-size:18px; font-weight:600; padding:15px 8px;
+    border-radius:14px; border:1.5px solid var(--line); background: var(--parchment);
+    color: var(--ink); cursor:pointer; transition: border-color .15s ease, transform .1s ease;
+  }
+  .opt-btn:hover{ border-color: var(--teal); transform: translateY(-1px); }
+  .opt-btn.correct{ background: var(--teal-tint); border-color: var(--teal); color: var(--teal-deep); }
+  .opt-btn.wrong{ background: rgba(139,58,58,0.1); border-color: var(--rose); color: var(--rose); }
+  .opt-btn:disabled{ cursor:default; transform:none; }
+
+  .ex-feedback{ text-align:center; font-size:15px; font-weight:600; min-height:24px; margin:16px 0 4px; }
+  .ex-feedback.ok{ color: var(--teal-deep); }
+  .ex-feedback.err{ color: var(--rose); }
+  .ex-actions{ display:flex; justify-content:center; margin-top:14px; }
+  .next-btn{
+    font-family:'Lora', serif; font-weight:600; font-size:14.5px; padding:11px 26px;
+    border-radius:999px; border:none; cursor:pointer;
+    background: linear-gradient(155deg, var(--gold-light), var(--gold)); color: var(--teal-deep);
+    display:none;
+  }
+  .next-btn.show{ display:inline-flex; }
+
+  .match-wrap{ display:flex; gap:40px; justify-content:center; flex-wrap:wrap; }
+  .match-col{ display:flex; flex-direction:column; gap:12px; min-width:130px; }
+  .match-item{
+    font-family:'Lora', serif; font-size:18px; font-weight:600; padding:14px 18px;
+    border-radius:12px; border:1.5px solid var(--line); background: var(--parchment);
+    cursor:pointer; text-align:center; transition: border-color .15s ease, background .15s ease;
+  }
+  .match-item.ar{ font-family:'Amiri', serif; font-size:24px; direction:rtl; }
+  .match-item.selected{ border-color: var(--teal); background: var(--teal-tint); }
+  .match-item.matched{ border-color: var(--teal); background: var(--teal-tint); opacity:0.55; cursor:default; }
+  .match-item.shake{ border-color: var(--rose); }
+
+  .type-row{ display:flex; gap:12px; justify-content:center; max-width:360px; margin:0 auto; width:100%; }
+  .type-row input{
+    flex:1; min-width:0; font-family:'Lora', serif; font-size:20px; text-align:center;
+    padding:14px 16px; border-radius:12px; border:1.5px solid var(--line); background: var(--parchment); color: var(--ink);
+  }
+  .type-row input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+  .type-row button{
+    flex-shrink:0; font-family:'Lora', serif; font-weight:600; font-size:15px; padding:0 22px;
+    border-radius:12px; border:none; cursor:pointer;
+    background: linear-gradient(155deg, var(--gold-light), var(--gold)); color: var(--teal-deep);
+  }
+  .type-hint{ text-align:center; font-size:13px; color: var(--ink-soft); margin-top:10px; }
+
+  /* word building */
+  .build-target{ text-align:center; margin-bottom: 18px; }
+  .build-target-label{ font-size:13.5px; color: var(--ink-soft); margin-bottom:8px; }
+  .build-display{
+    min-height: 64px; display:flex; align-items:center; justify-content:center;
+    font-family:'Amiri', serif; font-size: 44px; color: var(--teal-deep); direction: rtl;
+    background: var(--parchment); border: 1.5px dashed var(--line); border-radius:14px;
+    margin: 0 auto 18px; max-width: 420px; padding: 10px 20px; letter-spacing: 0;
+  }
+  .build-tiles{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; max-width:520px; margin:0 auto; }
+  .build-tile{
+    font-family:'Amiri', serif; font-size:24px; direction:rtl;
+    width:56px; height:56px; border-radius:12px; border:1.5px solid var(--line);
+    background: var(--parchment); color: var(--ink); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition: border-color .15s ease, transform .1s ease;
+  }
+  .build-tile:hover{ border-color: var(--teal); transform: translateY(-1px); }
+  .build-tile:disabled{ opacity:0.35; cursor:default; }
+  .build-controls{ display:flex; gap:10px; justify-content:center; margin-top:16px; }
+  .ghost-btn{
+    font-family:'Lora', serif; font-weight:600; font-size:13.5px; padding:9px 18px;
+    border-radius:999px; border:1.5px solid var(--line); background:transparent; color: var(--ink-soft); cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color: var(--teal); color: var(--teal-deep); }
+
+  /* timed reading */
+  .listen-repeat-label{
+    text-align:center; font-size:13px; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--teal-deep); font-weight:600; margin-bottom:14px;
+  }
+  .reading-words-audio{
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-bottom: 30px;
+    padding-bottom: 26px; border-bottom: 1px dashed var(--line);
+  }
+  .reading-word-audio{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-family:'Amiri', serif; font-size: 28px; direction:rtl; color: var(--ink);
+    background: var(--parchment); border:1px solid var(--line); border-radius:12px;
+    padding: 14px 18px;
+  }
+  .timer-display{
+    text-align:center; font-family:'Playfair Display', serif; font-size: 40px; font-weight:700;
+    color: var(--teal-deep); margin: 4px 0 20px;
+  }
+  .timer-display.warn{ color: var(--rose); }
+  .reading-words{
+    display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-bottom: 22px;
+  }
+  .reading-word{
+    font-family:'Amiri', serif; font-size: 34px; direction:rtl; color: var(--ink);
+    background: var(--parchment); border:1px solid var(--line); border-radius:12px;
+    padding: 12px 22px;
+  }
+  .timed-actions{ display:flex; justify-content:center; gap:12px; }
+  .start-btn, .done-btn{
+    font-family:'Lora', serif; font-weight:600; font-size:15px; padding:12px 28px;
+    border-radius:999px; border:none; cursor:pointer;
+    background: linear-gradient(155deg, var(--gold-light), var(--gold)); color: var(--teal-deep);
+  }
+  .done-btn{ display:none; }
+  .done-btn.show{ display:inline-flex; }
+  .timed-result{ text-align:center; font-size:15px; font-weight:600; margin-top:16px; min-height:22px; }
+  .timed-result.ok{ color: var(--teal-deep); }
+  .timed-result.err{ color: var(--rose); }
+
+  .completed-banner{
+    text-align:center; padding:60px 30px; background: var(--parchment-card);
+    border:1px solid var(--line); border-radius:20px; box-shadow: var(--shadow); display:none;
+  }
+  .completed-banner.show{ display:block; }
+  .completed-banner h2{ font-family:'Playfair Display', serif; font-size:28px; margin:14px 0 8px; }
+  .completed-banner p{ color: var(--ink-soft); font-size:15.5px; }
+  .completed-icon{
+    width:64px; height:64px; margin:0 auto; border-radius:50%;
+    background: linear-gradient(155deg, var(--gold-light), var(--gold));
+    display:flex; align-items:center; justify-content:center; color: var(--teal-deep);
+  }
+
+  @media (max-width: 640px){
+    .block, .exercise{ padding:22px 18px; }
+    .match-wrap{ gap:20px; }
+    .forms-row{ gap:8px; }
+    .form-card{ min-width: 78px; padding: 10px 8px; }
+    .form-card .glyph{ font-size:26px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-row">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">ا</span>
+      Arab tili
+    </a>
+    <div class="header-actions">
+      <nav class="main-nav">
+        <a href="alifbo.html" class="active" aria-current="page">Alifbo</a>
+        <a href="lugat.html">Lug'at</a>
+        <a href="grammatika.html">Grammatika</a>
+        <a href="multilevel.html">Multilevel</a>
+      </nav>
+      <a class="login-link" href="#">Kirish</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" style="padding-bottom:90px;">
+  <section class="lesson-hero">
+    <a class="back-link" href="alifbo.html">&larr; Alifbo bo'limi</a>
+    <p class="lesson-kicker">3-dars</p>
+    <h1>Ta, Ya, Ro harflari</h1>
+    <p>Bu darsda uchta yangi harfni o'rganasiz: ت (Ta), ي (Ya), ر (Ro). Ularni oldingi darslarda o'rgangan fatha, kasra, damma bilan birga o'qishni mashq qilamiz, so'zlar tuzamiz va tez o'qishni sinab ko'ramiz.</p>
+  </section>
+
+  <!-- ===================== EXPLANATION: three letters ===================== -->
+  <div class="block">
+    <h2><span class="num">1</span> Uchta yangi harf</h2>
+
+    <div class="letter-panel">
+      <div class="letter-panel-head">
+        <span class="big-glyph">ت</span>
+        <div>
+          <h3>Ta</h3>
+          <div class="sound-tag">"t" tovushi — "tosh" so'zidagi kabi</div>
+        </div>
+      </div>
+      <p>Ta ham xuddi Ba va Nun kabi kichkina qayiqchaga o'xshagan shaklga ega. Farqi shundaki, uning <b>ustida ikkita nuqta</b> bor.</p>
+      <div class="forms-row">
+        <div class="form-card"><div class="glyph">ت</div><div class="label">Mustaqil</div></div>
+        <div class="form-card"><div class="glyph">تـ</div><div class="label">So'z boshida</div></div>
+        <div class="form-card"><div class="glyph">ـتـ</div><div class="label">So'z o'rtasida</div></div>
+        <div class="form-card"><div class="glyph">ـت</div><div class="label">So'z oxirida</div></div>
+      </div>
+      <div class="note-box">
+        <div class="note-box-head">
+          <span class="note-glyph">ب ت ن</span>
+          <b>Uchtasini solishtiring</b>
+        </div>
+        <p>Ba, Ta va Nun — uchalasi ham bir xil "qayiqcha" shaklga ega, ular faqat nuqtasi bilan farqlanadi: <b>Ba</b> — bitta nuqta pastda; <b>Nun</b> — bitta nuqta ustida; <b>Ta</b> — ikkita nuqta ustida. Nuqtalarni diqqat bilan sanash — bu uch harfni farqlashning yagona yo'li.</p>
+      </div>
+      <div class="pronounce-box">
+        <div class="pronounce-box-head">
+          <span class="pronounce-icon" aria-hidden="true">👄</span>
+          <b>Qanday talaffuz qilinadi?</b>
+        </div>
+        <p>Tilingizning uchini tepadagi old tishlaringiz tagiga (tish bilan milk chegarasiga) tekkizib turing, keyin tilingizni birdan tortib olib tovush chiqaring. Bu — Ba kabi portlab chiquvchi tovush, lekin tovush pardalaringiz jaranglamaydi, faqat havo bilan yumshoq, pichirlagandek chiqadi.</p>
+        <button class="play-btn" onclick="speakArabic('تَ')">🔊 Tinglash</button>
+      </div>
+    </div>
+
+    <div class="letter-panel">
+      <div class="letter-panel-head">
+        <span class="big-glyph">ي</span>
+        <div>
+          <h3>Ya</h3>
+          <div class="sound-tag">"y" tovushi — "yaxshi" so'zidagi kabi</div>
+        </div>
+      </div>
+      <p>Ya — ostida <b>ikkita nuqtasi</b> bor harf. Mustaqil holatda va so'z oxirida uning chapga qarab pastga tushib ketadigan uzun "dumi" bo'ladi — bu Yani darhol tanib olish uchun eng oson belgi.</p>
+      <div class="forms-row">
+        <div class="form-card"><div class="glyph">ي</div><div class="label">Mustaqil</div></div>
+        <div class="form-card"><div class="glyph">يـ</div><div class="label">So'z boshida</div></div>
+        <div class="form-card"><div class="glyph">ـيـ</div><div class="label">So'z o'rtasida</div></div>
+        <div class="form-card"><div class="glyph">ـي</div><div class="label">So'z oxirida</div></div>
+      </div>
+      <div class="note-box">
+        <div class="note-box-head">
+          <span class="note-glyph">يـ ـيـ</span>
+          <b>Diqqat qiling</b>
+        </div>
+        <p>So'z boshida va o'rtasida Yaning "dumi" yo'qoladi — u ham Ba, Ta, Nun kabi tekis "taroqcha" shaklga o'xshab qoladi! Bunda uni faqat bitta belgi orqali tanish mumkin: <b>ostidagi ikkita nuqta</b>. Dumi ko'rinmasa ham, ikkita nuqta pastda bo'lsa — bu Ya.</p>
+      </div>
+      <div class="pronounce-box">
+        <div class="pronounce-box-head">
+          <span class="pronounce-icon" aria-hidden="true">👄</span>
+          <b>Qanday talaffuz qilinadi?</b>
+        </div>
+        <p>Tilingizning o'rta qismini tanglayning (og'iz tomining) o'rtasiga yaqinlashtiring — lekin tegizmang. Tovushni to'xtatmasdan, uzluksiz va silliq chiqaring — xuddi "yaxshi" so'zini boshlaganingizdek. Bu — Ba yoki Ta kabi portlovchi emas, balki oqib chiquvchi tovush.</p>
+        <button class="play-btn" onclick="speakArabic('يَ')">🔊 Tinglash</button>
+      </div>
+    </div>
+
+    <div class="letter-panel">
+      <div class="letter-panel-head">
+        <span class="big-glyph">ر</span>
+        <div>
+          <h3>Ro</h3>
+          <div class="sound-tag">"r" tovushi — "rasm" so'zidagi kabi</div>
+        </div>
+      </div>
+      <p>Ro — nuqtasiz harf, chiziqdan pastga tushadigan kichik ilmoqqa o'xshaydi. Uning Alifga o'xshash bitta muhim xususiyati bor: <b>Ro ham hech qachon o'zidan keyingi harfga ulanmaydi</b> — faqat oldingi harfdan ulanish qabul qiladi.</p>
+      <div class="forms-row">
+        <div class="form-card"><div class="glyph">ر</div><div class="label">Mustaqil / so'z boshida</div></div>
+        <div class="form-card"><div class="glyph">ـر</div><div class="label">So'z ichida / oxirida</div></div>
+      </div>
+      <p>Shuning uchun Alif kabi Raning ham atigi ikkita ko'rinishi bor — na "so'z boshida" bilan "mustaqil" orasida, na "o'rtada" bilan "oxirida" orasida hech qanday farq yo'q.</p>
+      <div class="pronounce-box">
+        <div class="pronounce-box-head">
+          <span class="pronounce-icon" aria-hidden="true">👄</span>
+          <b>Qanday talaffuz qilinadi?</b>
+        </div>
+        <p>Til uchingizni tepadagi milkka yengil tekkizib, biroz titratib tovush chiqaring — xuddi o'zbekcha "r" tovushini aytganingizdek ("rasm" so'zidagi kabi). Bu harfning o'ziga xos xususiyati bor: tilning bu titrashi tajvidda <b>"takrir"</b> deb ataladi.</p>
+        <button class="play-btn" onclick="speakArabic('رَ')">🔊 Tinglash</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== EXERCISE 1: sound MCQ ===================== -->
+  <div class="exercise" id="ex1">
+    <div class="ex-head">
+      <h3 class="ex-title"><span class="num">1</span> Harf qanday o'qiladi?</h3>
+      <span class="ex-progress" id="ex1-progress">1 / 6</span>
+    </div>
+    <p class="ex-instr">Harf va harakat birga ko'rsatiladi. To'g'ri o'qilishini tanlang.</p>
+    <div class="prompt-glyph" id="ex1-prompt">تَ</div>
+    <div class="opt-grid" id="ex1-opts"></div>
+    <p class="ex-feedback" id="ex1-feedback"></p>
+    <div class="ex-actions"><button class="next-btn" id="ex1-next" onclick="nextRound('ex1')">Keyingisi &rarr;</button></div>
+  </div>
+
+  <!-- ===================== EXERCISE 2: form recognition ===================== -->
+  <div class="exercise" id="ex2">
+    <div class="ex-head">
+      <h3 class="ex-title"><span class="num">2</span> Qaysi shakl?</h3>
+      <span class="ex-progress" id="ex2-progress">1 / 6</span>
+    </div>
+    <p class="ex-instr">Ko'rsatilgan harf qaysi holatda ekanini aniqlang.</p>
+    <div class="prompt-glyph" id="ex2-prompt">تـ</div>
+    <div class="opt-grid" id="ex2-opts" style="max-width:560px;"></div>
+    <p class="ex-feedback" id="ex2-feedback"></p>
+    <div class="ex-actions"><button class="next-btn" id="ex2-next" onclick="nextRound('ex2')">Keyingisi &rarr;</button></div>
+  </div>
+
+  <!-- ===================== EXERCISE 3: matching ===================== -->
+  <div class="exercise" id="ex3">
+    <div class="ex-head">
+      <h3 class="ex-title"><span class="num">3</span> Moslashtiring</h3>
+      <span class="ex-progress" id="ex3-progress">0 / 4</span>
+    </div>
+    <p class="ex-instr">Chapdagi harf+harakatni o'ng tomondagi to'g'ri o'qilishiga moslashtiring.</p>
+    <div class="match-wrap">
+      <div class="match-col" id="ex3-left"></div>
+      <div class="match-col" id="ex3-right"></div>
+    </div>
+    <p class="ex-feedback" id="ex3-feedback"></p>
+    <div class="ex-actions"><button class="next-btn" id="ex3-next" onclick="finishMatching()">Davom etish &rarr;</button></div>
+  </div>
+
+  <!-- ===================== EXERCISE 4: typed input ===================== -->
+  <div class="exercise" id="ex4">
+    <div class="ex-head">
+      <h3 class="ex-title"><span class="num">4</span> Yozib ko'ring</h3>
+      <span class="ex-progress" id="ex4-progress">1 / 15</span>
+    </div>
+    <p class="ex-instr">Ko'rsatilgan harf+harakat qanday o'qilishini yozing (masalan: ba, mi, nu).</p>
+    <div class="prompt-glyph" id="ex4-prompt">رُ</div>
+    <div class="type-row">
+      <input type="text" id="ex4-input" placeholder="masalan: ba" maxlength="4" autocomplete="off" onkeydown="if(event.key==='Enter')checkTyped()">
+      <button onclick="checkTyped()">Tekshirish</button>
+    </div>
+    <p class="type-hint">Javobni lotin harflarida yozing.</p>
+    <p class="ex-feedback" id="ex4-feedback"></p>
+    <div class="ex-actions"><button class="next-btn" id="ex4-next" onclick="nextRound('ex4')">Keyingisi &rarr;</button></div>
+  </div>
+
+  <!-- ===================== EXERCISE 5: word building ===================== -->
+  <div class="exercise" id="ex5">
+    <div class="ex-head">
+      <h3 class="ex-title"><span class="num">5</span> So'z tuzing</h3>
+      <span class="ex-progress" id="ex5-progress">1 / 5</span>
+    </div>
+    <p class="ex-instr">Pastdagi harflarni to'g'ri tartibda bosib, yuqoridagi maqsadli so'zni tuzing. Harflar bir-biriga qo'shilib yoziladi.</p>
+    <div class="build-target">
+      <div class="build-target-label">Tuzish kerak:</div>
+      <div class="prompt-glyph" id="ex5-target" style="margin-bottom:6px;">تَرَ</div>
+    </div>
+    <div class="build-display" id="ex5-display" dir="rtl"></div>
+    <div class="build-tiles" id="ex5-tiles"></div>
+    <div class="build-controls">
+      <button class="ghost-btn" onclick="clearBuild()">Tozalash</button>
+    </div>
+    <p class="ex-feedback" id="ex5-feedback"></p>
+    <div class="ex-actions"><button class="next-btn" id="ex5-next" onclick="nextRound('ex5')">Keyingisi &rarr;</button></div>
+  </div>
+
+  <!-- ===================== EXERCISE 6: timed reading ===================== -->
+  <div class="exercise" id="ex6">
+    <div class="ex-head">
+      <h3 class="ex-title"><span class="num">6</span> Tez o'qing</h3>
+      <span class="ex-progress" id="ex6-progress"></span>
+    </div>
+    <p class="ex-instr">Avval har bir so'zni tinglab, ovoz chiqarib qaytaring. Keyin "Boshlash" tugmasini bosib, so'zlarni 30 soniyada tez o'qib chiqing.</p>
+
+    <div class="listen-repeat-label">Eshiting va qaytaring</div>
+    <div class="reading-words-audio" id="reading-words-audio"></div>
+
+    <div class="timer-display" id="timer-display">30</div>
+    <div class="reading-words" id="reading-words"></div>
+    <div class="timed-actions">
+      <button class="start-btn" id="start-btn" onclick="startTimedReading()">Boshlash</button>
+      <button class="done-btn" id="done-btn" onclick="finishTimedReading()">Tugatdim</button>
+    </div>
+    <p class="timed-result" id="timed-result"></p>
+  </div>
+
+  <div class="completed-banner" id="completed">
+    <div class="completed-icon" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h2>Tabriklaymiz!</h2>
+    <p>3-darsni muvaffaqiyatli tugatdingiz. Endi Ta, Ya, Ro harflarini bilasiz va ularni harakatlar bilan o'qiy olasiz.</p>
+  </div>
+</main>
+
+<footer>
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true">ا</span>
+    Arab tili
+  </a>
+  &copy; 2026 · Barcha huquqlar himoyalangan
+</footer>
+
+<script>
+/* ============================================================
+   Audio (Web Speech API) — best-effort; browser voice quality varies.
+   ============================================================ */
+function speakArabic(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const voices = window.speechSynthesis.getVoices();
+  const arVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+  if(arVoice) u.voice = arVoice;
+  u.lang = 'ar-SA';
+  u.rate = 0.8;
+  window.speechSynthesis.speak(u);
+}
+
+/* ============================================================
+   Data
+   ============================================================ */
+const LETTERS = [
+  { id:'t', base:'ت', name:'Ta',
+    forms: ['ت','تـ','ـتـ','ـت'],
+    formLabels: ["Mustaqil", "So'z boshida", "So'z o'rtasida", "So'z oxirida"] },
+  { id:'y', base:'ي', name:'Ya',
+    forms: ['ي','يـ','ـيـ','ـي'],
+    formLabels: ["Mustaqil", "So'z boshida", "So'z o'rtasida", "So'z oxirida"] },
+  { id:'r', base:'ر', name:'Ro',
+    forms: ['ر','ـر'],
+    formLabels: ["Mustaqil / so'z boshida", "So'z ichida / oxirida"] },
+];
+const HARAKAT = [
+  { id:'a', mark:'َ', sound:'a' },
+  { id:'i', mark:'ِ', sound:'i' },
+  { id:'u', mark:'ُ', sound:'u' },
+];
+// letter+harakat combos, e.g. { glyph:'بَ', letterName:'Ba', sound:'ba' }
+const COMBOS = [];
+LETTERS.forEach(l => HARAKAT.forEach(h => {
+  COMBOS.push({ glyph: l.base + h.mark, letterName: l.name, letterId: l.id, harakatId: h.id, sound: l.id + h.sound });
+}));
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+/* ============================================================
+   Progress tracking / completion
+   ============================================================ */
+const completedExercises = new Set();
+function markExerciseDone(key){
+  completedExercises.add(key);
+  if(completedExercises.size === 6){
+    document.getElementById('completed').classList.add('show');
+    document.getElementById('completed').scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+}
+
+const TOTAL_ROUNDS = { ex1:6, ex2:6, ex4:15, ex5:5 };
+const state = {
+  ex1:{ round:0 }, ex2:{ round:0 }, ex4:{ round:0, current:null }, ex5:{ round:0 },
+};
+
+/* ============================================================
+   Generic MCQ engine
+   ============================================================ */
+function renderMCQ(key, promptText, correctLabel, allLabels, arabicOptions){
+  const promptEl = document.getElementById(key+'-prompt');
+  const optsEl = document.getElementById(key+'-opts');
+  const feedbackEl = document.getElementById(key+'-feedback');
+  const nextBtn = document.getElementById(key+'-next');
+  promptEl.textContent = promptText;
+  feedbackEl.textContent=''; feedbackEl.className='ex-feedback';
+  nextBtn.classList.remove('show');
+  optsEl.innerHTML='';
+  shuffle(allLabels).forEach(label => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn' + (arabicOptions ? ' ar' : '');
+    btn.textContent = label;
+    btn.onclick = () => handleMCQAnswer(key, btn, label, correctLabel, optsEl);
+    optsEl.appendChild(btn);
+  });
+}
+function handleMCQAnswer(key, btn, chosen, correct, optsEl){
+  optsEl.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  const feedbackEl = document.getElementById(key+'-feedback');
+  const nextBtn = document.getElementById(key+'-next');
+  if(chosen === correct){
+    btn.classList.add('correct');
+    feedbackEl.textContent = "To'g'ri! 👏"; feedbackEl.className = 'ex-feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    optsEl.querySelectorAll('.opt-btn').forEach(b => { if(b.textContent === correct) b.classList.add('correct'); });
+    feedbackEl.textContent = "Unchalik emas — to'g'ri javob: " + correct;
+    feedbackEl.className = 'ex-feedback err';
+  }
+  nextBtn.classList.add('show');
+}
+
+function nextRound(key){
+  const s = state[key];
+  s.round++;
+  const total = TOTAL_ROUNDS[key];
+  document.getElementById(key+'-progress').textContent = Math.min(s.round+1, total) + ' / ' + total;
+
+  if(s.round >= total){
+    document.getElementById(key+'-next').classList.remove('show');
+    document.getElementById(key+'-progress').textContent = total + ' / ' + total;
+    const feedbackEl = document.getElementById(key+'-feedback');
+    feedbackEl.textContent = "Mashq tugadi! ✅"; feedbackEl.className = 'ex-feedback ok';
+    if(key === 'ex5'){
+      document.getElementById('ex5-tiles').innerHTML = '';
+      document.getElementById('ex5-target').textContent = '✓';
+    } else {
+      const optsEl = document.getElementById(key+'-opts');
+      if(optsEl) optsEl.innerHTML = '';
+      const promptEl = document.getElementById(key+'-prompt');
+      if(promptEl) promptEl.textContent = '✓';
+    }
+    markExerciseDone(key);
+    return;
+  }
+
+  if(key === 'ex1') renderEx1Round();
+  else if(key === 'ex2') renderEx2Round();
+  else if(key === 'ex4') renderEx4Round();
+  else if(key === 'ex5') renderEx5Round();
+}
+
+/* ---------- Exercise 1: sound MCQ per-letter ---------- */
+function renderEx1Round(){
+  const combo = pick(COMBOS);
+  const letterSounds = HARAKAT.map(h => combo.letterId + h.sound);
+  renderMCQ('ex1', combo.glyph, combo.sound, letterSounds, false);
+}
+
+/* ---------- Exercise 2: form recognition ---------- */
+function renderEx2Round(){
+  const letter = pick(LETTERS);
+  const formIndex = Math.floor(Math.random() * letter.forms.length);
+  const glyph = letter.forms[formIndex];
+  const correct = letter.formLabels[formIndex];
+  document.getElementById('ex2-prompt').textContent = glyph;
+  renderMCQFromDOM('ex2', correct, letter.formLabels.slice());
+}
+// variant of renderMCQ that doesn't touch the prompt element (already set)
+function renderMCQFromDOM(key, correctLabel, allLabels){
+  const optsEl = document.getElementById(key+'-opts');
+  const feedbackEl = document.getElementById(key+'-feedback');
+  const nextBtn = document.getElementById(key+'-next');
+  feedbackEl.textContent=''; feedbackEl.className='ex-feedback';
+  nextBtn.classList.remove('show');
+  optsEl.innerHTML='';
+  shuffle(allLabels).forEach(label => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.style.fontSize = '14.5px';
+    btn.textContent = label;
+    btn.onclick = () => handleMCQAnswer(key, btn, label, correctLabel, optsEl);
+    optsEl.appendChild(btn);
+  });
+}
+
+/* ---------- Exercise 3: matching ---------- */
+let matchSelected = null, matchPairsSolved = 0, matchTotal = 4;
+function renderMatching(){
+  const chosen = shuffle(COMBOS).slice(0, matchTotal);
+  const left = shuffle(chosen.map(c => ({ id:c.sound, display:c.glyph })));
+  const right = shuffle(chosen.map(c => ({ id:c.sound, display:c.sound })));
+  const leftEl = document.getElementById('ex3-left');
+  const rightEl = document.getElementById('ex3-right');
+  leftEl.innerHTML=''; rightEl.innerHTML='';
+  left.forEach(item => {
+    const el = document.createElement('div');
+    el.className='match-item ar'; el.textContent=item.display;
+    el.dataset.id=item.id; el.dataset.side='left';
+    el.onclick=()=>handleMatchClick(el);
+    leftEl.appendChild(el);
+  });
+  right.forEach(item => {
+    const el = document.createElement('div');
+    el.className='match-item'; el.textContent=item.display;
+    el.dataset.id=item.id; el.dataset.side='right';
+    el.onclick=()=>handleMatchClick(el);
+    rightEl.appendChild(el);
+  });
+  matchSelected=null; matchPairsSolved=0;
+  document.getElementById('ex3-progress').textContent = '0 / ' + matchTotal;
+  document.getElementById('ex3-feedback').textContent='';
+  document.getElementById('ex3-next').classList.remove('show');
+}
+function handleMatchClick(el){
+  if(el.classList.contains('matched')) return;
+  if(!matchSelected){ matchSelected=el; el.classList.add('selected'); return; }
+  if(matchSelected===el) return;
+  if(matchSelected.dataset.side===el.dataset.side){
+    matchSelected.classList.remove('selected'); matchSelected=el; el.classList.add('selected'); return;
+  }
+  const feedbackEl = document.getElementById('ex3-feedback');
+  if(matchSelected.dataset.id===el.dataset.id){
+    matchSelected.classList.remove('selected'); matchSelected.classList.add('matched'); el.classList.add('matched');
+    matchSelected=null; matchPairsSolved++;
+    document.getElementById('ex3-progress').textContent = matchPairsSolved + ' / ' + matchTotal;
+    feedbackEl.textContent="To'g'ri! 👏"; feedbackEl.className='ex-feedback ok';
+    if(matchPairsSolved===matchTotal){
+      feedbackEl.textContent="Barcha juftlik topildi! ✅";
+      document.getElementById('ex3-next').classList.add('show');
+    }
+  } else {
+    el.classList.add('shake'); matchSelected.classList.add('shake');
+    feedbackEl.textContent="Bu juftlik emas, qayta urinib ko'ring"; feedbackEl.className='ex-feedback err';
+    const a=matchSelected,b=el;
+    setTimeout(()=>{ a.classList.remove('shake','selected'); b.classList.remove('shake'); }, 500);
+    matchSelected=null;
+  }
+}
+function finishMatching(){ markExerciseDone('ex3'); }
+
+/* ---------- Exercise 4: typed input ---------- */
+function renderEx4Round(){
+  const combo = pick(COMBOS);
+  state.ex4.current = combo;
+  document.getElementById('ex4-prompt').textContent = combo.glyph;
+  const input = document.getElementById('ex4-input');
+  input.value=''; input.disabled=false;
+  document.getElementById('ex4-feedback').textContent=''; document.getElementById('ex4-feedback').className='ex-feedback';
+  document.getElementById('ex4-next').classList.remove('show');
+  input.focus();
+}
+function checkTyped(){
+  const input = document.getElementById('ex4-input');
+  const feedbackEl = document.getElementById('ex4-feedback');
+  const nextBtn = document.getElementById('ex4-next');
+  const answer = input.value.trim().toLowerCase();
+  if(!answer) return;
+  const correct = state.ex4.current.sound;
+  input.disabled = true;
+  if(answer === correct){
+    feedbackEl.textContent="To'g'ri! 👏"; feedbackEl.className='ex-feedback ok';
+  } else {
+    feedbackEl.textContent="Unchalik emas — to'g'ri javob: \""+correct+"\"";
+    feedbackEl.className='ex-feedback err';
+  }
+  nextBtn.classList.add('show');
+}
+
+/* ---------- Exercise 5: word building ---------- */
+const BUILD_TARGETS = ['تَرَ','يِرِ','رَتَيِ','تُيَرَ','يَرُتِ'];
+let buildProgress = [];
+let buildCurrentTarget = '';
+
+function renderEx5Round(){
+  buildCurrentTarget = BUILD_TARGETS[state.ex5.round] || BUILD_TARGETS[0];
+  buildProgress = [];
+  document.getElementById('ex5-target').textContent = buildCurrentTarget;
+  document.getElementById('ex5-display').textContent = '';
+  document.getElementById('ex5-feedback').textContent='';
+  document.getElementById('ex5-feedback').className='ex-feedback';
+  document.getElementById('ex5-next').classList.remove('show');
+
+  const tilesEl = document.getElementById('ex5-tiles');
+  tilesEl.innerHTML = '';
+  const tileGlyphs = shuffle(COMBOS.map(c => c.glyph));
+  tileGlyphs.forEach(glyph => {
+    const btn = document.createElement('button');
+    btn.className = 'build-tile';
+    btn.textContent = glyph;
+    btn.onclick = () => tapBuildTile(glyph);
+    tilesEl.appendChild(btn);
+  });
+}
+function tapBuildTile(glyph){
+  buildProgress.push(glyph);
+  document.getElementById('ex5-display').textContent = buildProgress.join('');
+  const builtSoFar = buildProgress.join('');
+  const feedbackEl = document.getElementById('ex5-feedback');
+
+  if(buildCurrentTarget.indexOf(builtSoFar) !== 0){
+    feedbackEl.textContent = "Bu harf hozircha mos kelmaydi — qayta urinib ko'ring";
+    feedbackEl.className = 'ex-feedback err';
+    setTimeout(clearBuild, 700);
+    return;
+  }
+  feedbackEl.textContent = '';
+  feedbackEl.className = 'ex-feedback';
+
+  if(builtSoFar === buildCurrentTarget){
+    feedbackEl.textContent = "Ajoyib! So'z to'g'ri tuzildi! 👏";
+    feedbackEl.className = 'ex-feedback ok';
+    document.getElementById('ex5-tiles').querySelectorAll('.build-tile').forEach(b => b.disabled = true);
+    document.getElementById('ex5-next').classList.add('show');
+  }
+}
+function clearBuild(){
+  buildProgress = [];
+  document.getElementById('ex5-display').textContent = '';
+  const feedbackEl = document.getElementById('ex5-feedback');
+  if(!feedbackEl.textContent.includes("to'g'ri tuzildi")){
+    feedbackEl.textContent=''; feedbackEl.className='ex-feedback';
+  }
+}
+
+/* ---------- Exercise 6: timed reading ---------- */
+const READING_WORDS = ['تَرَيُ','يِرَتِ','رُتَيِ','تَيِرُ','رَيُتِ'];
+let timerInterval = null;
+let timerRemaining = 30;
+
+function renderReadingWords(){
+  const el = document.getElementById('reading-words');
+  el.innerHTML = '';
+  READING_WORDS.forEach(w => {
+    const div = document.createElement('div');
+    div.className = 'reading-word';
+    div.textContent = w;
+    el.appendChild(div);
+  });
+
+  const audioEl = document.getElementById('reading-words-audio');
+  audioEl.innerHTML = '';
+  READING_WORDS.forEach(w => {
+    const card = document.createElement('div');
+    card.className = 'reading-word-audio';
+    const wordSpan = document.createElement('span');
+    wordSpan.textContent = w;
+    const btn = document.createElement('button');
+    btn.className = 'play-btn';
+    btn.textContent = '🔊 Tinglash';
+    btn.onclick = () => speakArabic(w);
+    card.appendChild(wordSpan);
+    card.appendChild(btn);
+    audioEl.appendChild(card);
+  });
+}
+function startTimedReading(){
+  timerRemaining = 30;
+  document.getElementById('timer-display').textContent = timerRemaining;
+  document.getElementById('timer-display').classList.remove('warn');
+  document.getElementById('start-btn').style.display = 'none';
+  document.getElementById('done-btn').classList.add('show');
+  document.getElementById('timed-result').textContent = '';
+  document.getElementById('timed-result').className = 'timed-result';
+
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerRemaining--;
+    document.getElementById('timer-display').textContent = Math.max(timerRemaining, 0);
+    if(timerRemaining <= 10) document.getElementById('timer-display').classList.add('warn');
+    if(timerRemaining <= 0){
+      clearInterval(timerInterval);
+      timeUpReading();
+    }
+  }, 1000);
+}
+function finishTimedReading(){
+  clearInterval(timerInterval);
+  document.getElementById('done-btn').classList.remove('show');
+  const resultEl = document.getElementById('timed-result');
+  const usedSeconds = 30 - Math.max(timerRemaining, 0);
+  resultEl.textContent = "Zo'r! " + usedSeconds + " soniyada o'qib tugatdingiz. 👏";
+  resultEl.className = 'timed-result ok';
+  markExerciseDone('ex6');
+}
+function timeUpReading(){
+  document.getElementById('done-btn').classList.remove('show');
+  const resultEl = document.getElementById('timed-result');
+  resultEl.textContent = "Vaqt tugadi — xavotir olmang, mashq qilishda davom eting!";
+  resultEl.className = 'timed-result err';
+  markExerciseDone('ex6');
+}
+
+/* ============================================================
+   Init
+   ============================================================ */
+document.getElementById('ex1-progress').textContent = '1 / ' + TOTAL_ROUNDS.ex1;
+document.getElementById('ex2-progress').textContent = '1 / ' + TOTAL_ROUNDS.ex2;
+document.getElementById('ex4-progress').textContent = '1 / ' + TOTAL_ROUNDS.ex4;
+document.getElementById('ex5-progress').textContent = '1 / ' + TOTAL_ROUNDS.ex5;
+
+renderEx1Round();
+renderEx2Round();
+renderMatching();
+renderEx4Round();
+renderEx5Round();
+renderReadingWords();
+</script>
+</body>
+</html>
