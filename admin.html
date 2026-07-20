@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Arab tili</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  .admin-wrap{ max-width: 720px; }
+  .admin-hero{ padding: 30px 0 26px; }
+  .admin-hero h1{ font-family:'Playfair Display', serif; font-weight:700; font-size: 30px; margin:0 0 8px; }
+  .admin-hero p{ color: var(--ink-soft); font-size: 15px; margin:0; }
+
+  .gate-box{
+    background: var(--parchment-card); border:1px solid var(--line); border-radius:20px;
+    box-shadow: var(--shadow); padding: 36px; max-width: 420px; margin: 40px auto; text-align:center;
+  }
+  .gate-box h3{ font-family:'Playfair Display', serif; font-size:20px; margin:0 0 16px; }
+  .gate-box input{
+    width:100%; font-family:'Lora', serif; font-size:15px; padding:13px 16px;
+    border-radius:12px; border:1.5px solid var(--line); background: var(--parchment);
+    color: var(--ink); margin-bottom:14px; box-sizing:border-box;
+  }
+  .gate-box input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+  .gate-msg{ font-size:14px; min-height:20px; margin-top:12px; }
+  .gate-msg.err{ color: var(--rose); }
+  .gate-msg.ok{ color: var(--teal-deep); }
+
+  .panel{
+    background: var(--parchment-card); border:1px solid var(--line); border-radius:20px;
+    box-shadow: var(--shadow); padding: 28px 30px; margin-bottom: 24px; display:none;
+  }
+  .panel.show{ display:block; }
+  .panel h2{ font-family:'Playfair Display', serif; font-size:20px; margin:0 0 18px; }
+
+  .field-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 16px; }
+  .field{ flex:1; min-width: 160px; display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-size:13px; color: var(--ink-soft); font-weight:600; }
+  .field input, .field select{
+    font-family:'Lora', serif; font-size:15px; padding:12px 14px;
+    border-radius:10px; border:1.5px solid var(--line); background: var(--parchment); color: var(--ink);
+  }
+  .field input:focus, .field select:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+
+  .row-inline{ display:flex; gap:10px; }
+  .row-inline input{ flex:1; }
+  .btn-secondary{
+    font-family:'Lora', serif; font-weight:600; font-size:13.5px; padding:0 16px;
+    border-radius:10px; border:1.5px solid var(--line); background:transparent; color: var(--ink-soft); cursor:pointer;
+    white-space:nowrap;
+  }
+  .btn-secondary:hover{ border-color: var(--teal); color: var(--teal-deep); }
+
+  .btn-create{
+    font-family:'Lora', serif; font-weight:600; font-size:15px; padding:13px 28px;
+    border-radius:999px; border:none; cursor:pointer;
+    background: linear-gradient(155deg, var(--gold-light), var(--gold)); color: var(--teal-deep);
+  }
+  .create-msg{ font-size:14px; margin-top:14px; min-height:20px; }
+  .create-msg.ok{ color: var(--teal-deep); }
+  .create-msg.err{ color: var(--rose); }
+
+  table{ width:100%; border-collapse: collapse; font-size:14px; }
+  th, td{ text-align:left; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+  th{ color: var(--ink-soft); font-weight:600; font-size:12.5px; text-transform:uppercase; letter-spacing:0.04em; }
+  td.mono{ font-family: monospace; font-size: 13.5px; }
+  .empty-row td{ text-align:center; color: var(--ink-soft); padding: 20px 0; }
+
+  @media (max-width: 600px){
+    .panel{ padding: 22px 18px; }
+    table{ font-size:13px; }
+    th, td{ padding: 8px 5px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-row">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">ا</span>
+      Arab tili
+    </a>
+    <div class="header-actions">
+      <a class="login-link" href="index.html">Bosh sahifa</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap admin-wrap" style="padding-bottom:90px;">
+  <section class="admin-hero">
+    <h1>Admin panel</h1>
+    <p>Kirish kodlarini yarating va mavjudlarini ko'ring.</p>
+  </section>
+
+  <div class="gate-box" id="gate-box">
+    <h3>Admin kaliti</h3>
+    <input type="password" id="admin-key-input" placeholder="Kalitni kiriting" onkeydown="if(event.key==='Enter')checkAdminKey()">
+    <button class="btn-create" style="width:100%;" onclick="checkAdminKey()">Kirish</button>
+    <p class="gate-msg" id="gate-msg"></p>
+  </div>
+
+  <div class="panel" id="create-panel">
+    <h2>Yangi kod yaratish</h2>
+    <div class="field-row">
+      <div class="field" style="flex:2;">
+        <label>Kod</label>
+        <div class="row-inline">
+          <input type="text" id="new-code-input" placeholder="masalan: ARB-4F92K1">
+          <button class="btn-secondary" onclick="generateRandomCode()">Avtomatik</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Bo'lim</label>
+        <select id="new-code-section">
+          <option value="kurs">Asosiy kurs</option>
+          <option value="grammatika">Grammatika</option>
+          <option value="multilevel">Multilevel</option>
+        </select>
+      </div>
+      <div class="field" style="max-width:110px;">
+        <label>Necha marta</label>
+        <input type="number" id="new-code-maxuses" value="1" min="1">
+      </div>
+    </div>
+    <button class="btn-create" onclick="createCode()">Kod yaratish</button>
+    <p class="create-msg" id="create-msg"></p>
+  </div>
+
+  <div class="panel" id="list-panel">
+    <h2>Mavjud kodlar</h2>
+    <table>
+      <thead>
+        <tr><th>Kod</th><th>Bo'lim</th><th>Ishlatilgan</th><th>Yaratilgan</th></tr>
+      </thead>
+      <tbody id="codes-tbody">
+        <tr class="empty-row"><td colspan="4">Yuklanmoqda...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer>
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true">ا</span>
+    Arab tili
+  </a>
+  &copy; 2026 · Barcha huquqlar himoyalangan
+</footer>
+
+<script>
+const SUPABASE_URL = "https://wtjgrdotrksduhliwjdt.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0amdyZG90cmtzZHVobGl3amR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMzE3NzYsImV4cCI6MjA5OTYwNzc3Nn0.EePO8zb9g-0NKpbKPKQ_1sExFVrbkPjo2cZH--WEQfE";
+const supabaseClient = (typeof window.supabase !== "undefined")
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+let adminKey = null;
+const SECTION_NAMES = { kurs: "Asosiy kurs", grammatika: "Grammatika", multilevel: "Multilevel" };
+
+async function checkAdminKey(){
+  const input = document.getElementById('admin-key-input');
+  const msg = document.getElementById('gate-msg');
+  const key = input.value.trim();
+  if(!key){ return; }
+  if(!supabaseClient){
+    msg.textContent = "Ulanishda xatolik. Sahifani qayta yuklang.";
+    msg.className = "gate-msg err";
+    return;
+  }
+  msg.textContent = "Tekshirilmoqda...";
+  msg.className = "gate-msg";
+
+  try{
+    const { data, error } = await supabaseClient.rpc('list_access_codes', { p_admin_key: key });
+    if(error){
+      msg.textContent = "Xatolik yuz berdi.";
+      msg.className = "gate-msg err";
+      return;
+    }
+    if(!data || data.length === 0){
+      // Could be a wrong key (returns empty) or genuinely zero codes yet.
+      // Try a harmless generate-check by attempting to read again is not reliable,
+      // so we accept and let the panel show — an empty table is still informative.
+    }
+    adminKey = key;
+    document.getElementById('gate-box').style.display = 'none';
+    document.getElementById('create-panel').classList.add('show');
+    document.getElementById('list-panel').classList.add('show');
+    renderCodesTable(data || []);
+  } catch(err){
+    msg.textContent = "Ulanishda xatolik.";
+    msg.className = "gate-msg err";
+  }
+}
+
+function generateRandomCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'ARB-';
+  for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
+  document.getElementById('new-code-input').value = code;
+}
+
+async function createCode(){
+  const codeInput = document.getElementById('new-code-input');
+  const sectionSelect = document.getElementById('new-code-section');
+  const maxUsesInput = document.getElementById('new-code-maxuses');
+  const msg = document.getElementById('create-msg');
+
+  const code = codeInput.value.trim();
+  if(!code){
+    msg.textContent = "Kod kiritilishi shart.";
+    msg.className = "create-msg err";
+    return;
+  }
+  const maxUses = parseInt(maxUsesInput.value, 10) || 1;
+
+  msg.textContent = "Yaratilmoqda...";
+  msg.className = "create-msg";
+
+  try{
+    const { data, error } = await supabaseClient.rpc('generate_access_code', {
+      p_admin_key: adminKey,
+      p_code: code,
+      p_section_id: sectionSelect.value,
+      p_max_uses: maxUses,
+    });
+    if(error){
+      msg.textContent = "Xatolik yuz berdi.";
+      msg.className = "create-msg err";
+      return;
+    }
+    const row = Array.isArray(data) ? data[0] : data;
+    if(row && row.success){
+      msg.textContent = row.message;
+      msg.className = "create-msg ok";
+      codeInput.value = '';
+      refreshCodesList();
+    } else {
+      msg.textContent = (row && row.message) || "Xatolik yuz berdi.";
+      msg.className = "create-msg err";
+    }
+  } catch(err){
+    msg.textContent = "Ulanishda xatolik.";
+    msg.className = "create-msg err";
+  }
+}
+
+async function refreshCodesList(){
+  if(!adminKey) return;
+  try{
+    const { data, error } = await supabaseClient.rpc('list_access_codes', { p_admin_key: adminKey });
+    if(error) return;
+    renderCodesTable(data || []);
+  } catch(err){}
+}
+
+function renderCodesTable(codes){
+  const tbody = document.getElementById('codes-tbody');
+  tbody.innerHTML = '';
+  if(codes.length === 0){
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Hozircha kod yo\'q</td></tr>';
+    return;
+  }
+  codes.forEach(c => {
+    const tr = document.createElement('tr');
+    const dateStr = new Date(c.created_at).toLocaleDateString('uz-UZ');
+    tr.innerHTML = `
+      <td class="mono">${c.code}</td>
+      <td>${SECTION_NAMES[c.section_id] || c.section_id}</td>
+      <td>${c.use_count} / ${c.max_uses}</td>
+      <td>${dateStr}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+</script>
+</body>
+</html>
